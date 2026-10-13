@@ -44,14 +44,18 @@ pip install -r requirements.txt
 
 ## 🖥️ Sample Output
 
-Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
+Output from running `python main.py`:
 
 ```
-# e.g.:
-# Daily plan for Biscuit (Golden Retriever):
-#   08:00 — Morning walk (30 min) [priority: high]
-#   09:00 — Feeding (10 min) [priority: high]
-#   ...
+Today's Schedule for Noah
+  08:00  Morning walk (Biscuit) [daily] [todo]
+  08:00  Feed (Mochi) [daily] [todo]
+  14:30  Vet appointment (Mochi) [once] [todo]
+  18:00  Evening walk (Biscuit) [daily] [todo]
+
+Only Mochi's tasks:
+  08:00  Feed (Mochi) [daily] [todo]
+  14:30  Vet appointment (Mochi) [once] [todo]
 ```
 
 ## 🧪 Testing PawPal+
