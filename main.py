@@ -37,6 +37,19 @@ def main():
     print("\nOnly Mochi's tasks:")
     print(format_schedule(scheduler.filter_tasks(pet_name="Mochi")))
 
+    print("\nConflict check:")
+    conflicts = scheduler.detect_conflicts()
+    if conflicts:
+        for warning in conflicts:
+            print("  ! " + warning)
+    else:
+        print("  none")
+
+    print("\nComplete Biscuit's morning walk (daily) -> rolls to tomorrow:")
+    morning = biscuit.tasks[1]  # "Morning walk"
+    upcoming = scheduler.complete_task(biscuit, morning)
+    print(f"  next occurrence due {upcoming.due_date} at {upcoming.time}")
+
 
 if __name__ == "__main__":
     main()
