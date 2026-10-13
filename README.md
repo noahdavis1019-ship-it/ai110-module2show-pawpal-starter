@@ -60,19 +60,31 @@ Only Mochi's tasks:
 
 ## 🧪 Testing PawPal+
 
-```bash
-# Run the full test suite:
-pytest
+Run the full suite with:
 
-# Run with coverage:
-pytest --cov
+```bash
+python -m pytest
 ```
+
+The suite covers status flips, task counts, chronological sorting, pet/status
+filtering, daily recurrence on completion, one-off tasks not recurring, same-time
+conflict detection, and empty-owner edge cases.
 
 Sample test output:
 
 ```
-# Paste your pytest output here
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.6.0
+collected 9 items
+
+tests/test_pawpal.py .........                                           [100%]
+
+============================== 9 passed in 0.03s ===============================
 ```
+
+**Confidence Level: ★★★★☆** — Core logic and all four algorithms are covered by
+passing tests. Dropped one star because conflicts are detected only on exact time
+matches, not overlapping durations.
 
 ## 📐 Smarter Scheduling
 
@@ -85,12 +97,38 @@ Sample test output:
 
 ## 📸 Demo Walkthrough
 
-Describe your app in numbered steps so a reader can follow along without watching a video:
+Run the app with `streamlit run app.py`. The owner is held in `st.session_state`
+so pets and tasks persist across reruns.
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+**Main features**
+- Add pets (name + species) through a form.
+- Add tasks to any pet with a time (`HH:MM`) and frequency (once/daily/weekly).
+- View a time-sorted schedule in a table.
+- See conflict warnings when two tasks share a time slot.
+- Complete a task; daily/weekly ones automatically reschedule for the next occurrence.
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
+**Example workflow**
+1. Add a pet named Biscuit (dog).
+2. Add "Morning walk" at 08:00, daily.
+3. Add a second pet Mochi (cat) and a "Feed" task at 08:00, daily.
+4. The schedule table lists both at 08:00 and a warning flags the 08:00 conflict.
+5. Mark "Morning walk" complete; a new Morning walk appears for tomorrow.
+
+**Key Scheduler behaviors shown:** chronological sorting, exact-time conflict
+warnings, and daily/weekly recurrence.
+
+Sample CLI output from `python main.py`:
+
+```
+Today's Schedule for Noah
+  08:00  Morning walk (Biscuit) [daily] [todo]
+  08:00  Feed (Mochi) [daily] [todo]
+  14:30  Vet appointment (Mochi) [once] [todo]
+  18:00  Evening walk (Biscuit) [daily] [todo]
+
+Conflict check:
+  ! Conflict at 08:00: Morning walk (Biscuit) and Feed (Mochi)
+
+Complete Biscuit's morning walk (daily) -> rolls to tomorrow:
+  next occurrence due 2026-10-14 at 08:00
+```
