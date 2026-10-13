@@ -1,0 +1,38 @@
+classDiagram
+    %% PawPal+ initial design (Phase 1 draft)
+    %% Four core classes: Owner has Pets, Pets have Tasks, Scheduler reads across the Owner.
+
+    class Task {
+        +str description
+        +str time
+        +str frequency
+        +bool completed
+        +mark_complete() void
+    }
+
+    class Pet {
+        +str name
+        +str species
+        +list~Task~ tasks
+        +add_task(task) void
+        +task_count() int
+    }
+
+    class Owner {
+        +str name
+        +list~Pet~ pets
+        +add_pet(pet) void
+        +all_tasks() list~Task~
+    }
+
+    class Scheduler {
+        +Owner owner
+        +todays_schedule() list
+        +sort_by_time(tasks) list~Task~
+        +filter_tasks(pet, status) list~Task~
+        +detect_conflicts() list~str~
+    }
+
+    Owner "1" --> "*" Pet : has
+    Pet "1" --> "*" Task : has
+    Scheduler --> Owner : reads
